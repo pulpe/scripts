@@ -39,7 +39,7 @@ class SledovaniTV:
     def get_pvr_record(self, rid):
         r = requests.get(
             "https://sledovanitv.cz/api/record-timeshift",
-            params={"PHPSESSID": self.phpsessid, "recordId": rid}
+            params={"PHPSESSID": self.phpsessid, "recordId": rid},
         )
 
         return r.json()["url"]
@@ -84,7 +84,7 @@ class SledovaniTV:
             if c == 0:
                 sys.exit(1)
 
-            url = self.get_pvr_record(pvr[c-1])
+            url = self.get_pvr_record(pvr[c - 1])
 
             subprocess.run([self.player, url])
 
@@ -112,7 +112,7 @@ class SledovaniTV:
             if c == 0:
                 sys.exit(1)
 
-            subprocess.run([self.player, self.playlist[ret[c-1]]])
+            subprocess.run([self.player, self.playlist[ret[c - 1]]])
 
 
 if __name__ == "__main__":
