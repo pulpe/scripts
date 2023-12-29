@@ -17,21 +17,14 @@ class Spotlight:
         self.conf_db = os.path.join(self.conf_dir, "spotlight.db")
 
         if not os.path.exists(self.conf_dir):
-            self.create_config()
+            print("Creating config dir")
+            os.makedirs(self.conf_dir)
 
         self.con = sqlite3.connect(self.conf_db)
         self.cur = self.con.cursor()
 
-    def create_config(self):
-        print("Creating config")
-        os.makedirs(self.conf_dir)
-
-        if not os.path.exists(self.conf_db):
-            con = sqlite3.connect(self.conf_db)
-            cur = con.cursor()
-            cur.execute("CREATE TABLE spotlight(name)")
-            con.commit()
-            con.close()
+        self.cur.execute("CREATE TABLE IF NOT EXISTS spotlight(name)")
+        self.con.commit()
 
     def get_picture(self):
         print("Getting picture")
